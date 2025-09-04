@@ -16,6 +16,10 @@ import java.util.List;
 public class SessionService {
     ISessionRepository sessionRepository;
 
+    public List<Session> getAllSaveSessionTrue() {
+        return sessionRepository.findAllBySaveSessionTrue();
+    }
+
     public void saveSessions(List<Session> sessions) {
         sessionRepository.saveAll(sessions);
     }
