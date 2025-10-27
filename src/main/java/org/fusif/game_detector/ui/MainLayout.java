@@ -1,4 +1,4 @@
-package org.fusif.game_detector.ui.views;
+package org.fusif.game_detector.ui;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;

@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface IApplicationRepository extends JpaRepository<Application, Integer> {
     Optional<Application> findApplicationByPath(String path);
     List<Application> findApplicationsBySaveSessionFalse();
+    List<Application> findApplicationsBySaveSessionTrue();
 }

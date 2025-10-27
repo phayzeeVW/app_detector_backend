@@ -22,10 +22,10 @@ public class Application {
     @JoinColumn(name = "rawg_game_id", referencedColumnName = "id")
     private RawgGame rawgGame;
 
-    @Column(name = "path", nullable = false, length = 256, unique = true)
+    @Column(name = "path", nullable = false, length = 512, unique = true)
     private String path;
 
-    @Column(name = "title", nullable = false, length = 256)
+    @Column(name = "title", nullable = false, length = 512)
     private String title;
 
     @Column(name = "alias", length = 64)

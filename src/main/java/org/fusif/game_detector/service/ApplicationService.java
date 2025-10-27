@@ -25,6 +25,14 @@ public class ApplicationService {
         return this.iApplicationRepository.findApplicationsBySaveSessionFalse();
     }
 
+    public List<Application> getApplicationsBySaveSessionTrue() {
+        return this.iApplicationRepository.findApplicationsBySaveSessionTrue();
+    }
+
+    public List<Application> findAll() {
+        return this.iApplicationRepository.findAll();
+    }
+
     public void saveApplication(Application application) {
         this.iApplicationRepository.save(application);
     }
