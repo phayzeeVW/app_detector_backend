@@ -1,11 +1,11 @@
 package org.fusif.game_detector.scheduler;
 
 
-import com.sun.jna.platform.WindowUtils;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.fusif.game_detector.entity.Application;
 import org.fusif.game_detector.entity.Session;
+import org.fusif.game_detector.external.WindowUtils;
 import org.fusif.game_detector.model.DesktopWindowWrapper;
 import org.fusif.game_detector.service.ApplicationService;
 import org.fusif.game_detector.service.SessionService;
