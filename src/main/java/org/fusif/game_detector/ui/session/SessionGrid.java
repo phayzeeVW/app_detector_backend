@@ -1,4 +1,4 @@
-package org.fusif.game_detector.ui.sessions;
+package org.fusif.game_detector.ui.session;
 
 import com.vaadin.flow.component.grid.Grid;
 import org.fusif.game_detector.entity.Session;
@@ -16,8 +16,9 @@ public class SessionGrid extends Grid<Session> {
         addColumn(Session::getId).setHeader("ID").setAutoWidth(true).setResizable(true).setSortable(true).setKey("id");
         addColumn(s -> s.getApplication().getAlias()).setHeader("Application Name").setAutoWidth(true).setSortable(true).setResizable(true).setKey("application");
         addColumn(s -> s.getApplication().getPath()).setHeader("Application Path").setAutoWidth(true).setSortable(true).setResizable(true).setKey("path");
-        addColumn(s -> getLocalDateTimeFromInstant(s.getSessionStart())).setHeader("Start").setAutoWidth(true).setSortable(true).setResizable(true).setKey("start");
-        addColumn(s -> getLocalDateTimeFromInstant(s.getSessionStop())).setHeader("Stop").setAutoWidth(true).setSortable(true).setResizable(true).setKey("stop");
+        addColumn(s -> (s.getSessionStart())).setHeader("Start").setAutoWidth(true).setSortable(true).setResizable(true).setKey("start");
+        addColumn(s -> (s.getSessionStop())).setHeader("Stop").setAutoWidth(true).setSortable(true).setResizable(true).setKey("stop");
+//        addColumn(s -> )
     }
 
     private String getLocalDateTimeFromInstant(Instant instant) {
