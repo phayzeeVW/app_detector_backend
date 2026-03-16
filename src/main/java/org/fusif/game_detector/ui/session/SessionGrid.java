@@ -2,29 +2,37 @@ package org.fusif.game_detector.ui.session;
 
 import com.vaadin.flow.component.grid.Grid;
 import org.fusif.game_detector.entity.Session;
+import org.fusif.game_detector.utils.Utils;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 
 public class SessionGrid extends Grid<Session> {
     public SessionGrid() {
         setSizeFull();
         setColumnReorderingAllowed(true);
 
-        addColumn(Session::getId).setHeader("ID").setAutoWidth(true).setResizable(true).setSortable(true).setKey("id");
-        addColumn(s -> s.getApplication().getAlias()).setHeader("Application Name").setAutoWidth(true).setSortable(true).setResizable(true).setKey("application");
-        addColumn(s -> s.getApplication().getPath()).setHeader("Application Path").setAutoWidth(true).setSortable(true).setResizable(true).setKey("path");
-        addColumn(s -> (s.getSessionStart())).setHeader("Start").setAutoWidth(true).setSortable(true).setResizable(true).setKey("start");
-        addColumn(s -> (s.getSessionStop())).setHeader("Stop").setAutoWidth(true).setSortable(true).setResizable(true).setKey("stop");
+        addColumn(Session::getId).setHeader("ID")
+                .setAutoWidth(true).setResizable(true).setSortable(true).setKey("id");
+        addColumn(s -> s.getApplication().getAlias()).setHeader("Application Name")
+                .setAutoWidth(true).setSortable(true).setResizable(true).setKey("application");
+        addColumn(s -> s.getApplication().getPath()).setHeader("Application Path")
+                .setAutoWidth(true).setSortable(true).setResizable(true).setKey("path");
+        addColumn(Session::getSessionStart).setHeader("Start")
+                .setAutoWidth(true).setSortable(true).setResizable(true).setKey("start");
+        addColumn(Session::getSessionStop).setHeader("Stop")
+                .setAutoWidth(true).setSortable(true).setResizable(true).setKey("stop");
+        addColumn(s -> Utils.prettyPrintTimeBetweenInstants(s.getSessionStart(), s.getSessionStop())).setHeader("Duration")
+                .setAutoWidth(true).setSortable(true).setResizable(true).setKey("duration")
+                .setComparator(
+                        new Comparator<>() {
+                            @Override
+                            public int compare(Session o1, Session o2) {
+                                return Utils.getDurationBetweenInstants(o1.getSessionStart(), o1.getSessionStop())
+                                        .compareTo(Utils.getDurationBetweenInstants(o2.getSessionStart(), o2.getSessionStop()));
+                            }
+                        }
+                );
 //        addColumn(s -> )
-    }
-
-    private String getLocalDateTimeFromInstant(Instant instant) {
-        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(
-                DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
-        );
     }
 
     public Session getSelectedSession() {

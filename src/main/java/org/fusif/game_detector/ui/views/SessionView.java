@@ -7,6 +7,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import org.fusif.game_detector.entity.Session;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Route(value = "sessions", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
+@Menu(order = 1, title = "Sessions")
 public class SessionView extends VerticalLayout {
     private final SessionGrid sessionGrid = new SessionGrid();
 
@@ -54,7 +56,8 @@ public class SessionView extends VerticalLayout {
 
     private boolean matchesTerm(String value, String term) {
         if (value != null && term != null) {
-            return value.toLowerCase().replace("-", "").replace(".", "").contains(term.toLowerCase());
+            return value.toLowerCase().replace("-", "").replace(".", "")
+                    .contains(term.toLowerCase().replace("-", "").replace(".", ""));
         }
 
         return false;
