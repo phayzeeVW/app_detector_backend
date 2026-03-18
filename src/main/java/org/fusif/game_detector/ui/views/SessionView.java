@@ -23,7 +23,7 @@ import java.util.List;
 @RouteAlias(value = "", layout = MainLayout.class)
 @Menu(order = 1, title = "Sessions")
 public class SessionView extends VerticalLayout {
-    private final SessionGrid sessionGrid = new SessionGrid();
+    SessionGrid sessionGrid = new SessionGrid();
 
     public static final String VIEW_NAME = "Sessions";
 
@@ -37,7 +37,6 @@ public class SessionView extends VerticalLayout {
         add(searchField);
         add(columnFilter);
         add(sessionGrid);
-
 
         sessionGrid.setItems(sessionService.getAllSaveSessionTrue());
         sessionGrid.getListDataView().addFilter(session -> {
@@ -63,30 +62,26 @@ public class SessionView extends VerticalLayout {
         return false;
     }
 
-    private TextField createSearchField() {
+    public TextField createSearchField() {
         TextField textField = new TextField();
         textField.setPlaceholder("Search");
         textField.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
         textField.setValueChangeMode(ValueChangeMode.EAGER);
-        textField.addValueChangeListener(e -> sessionGrid.getListDataView().refreshAll());
+        textField.addValueChangeListener(e -> this.sessionGrid.getListDataView().refreshAll());
 
         return textField;
     }
 
-    private MultiSelectComboBox<String> createColumnFilter() {
+    public MultiSelectComboBox<String> createColumnFilter() {
         MultiSelectComboBox<String> comboFilter = new MultiSelectComboBox<>();
         List<Grid.Column<Session>> columns = new ArrayList<>(this.sessionGrid.getColumns());
 
-        comboFilter.setItems(columns.stream().map(Grid.Column::getHeaderText).toList());
-//        comboFilter.addValueChangeListener(e -> e.getValue().forEach(columnToBeShown -> columns.forEach(
-//                column -> {
-//                    if (column.getHeaderText().equals(columnToBeShown)) {
-//                        this.sessionGrid.getColumnByKey(column.getKey()).setVisible(true);
-//                    } else {
-//                        this.sessionGrid.getColumnByKey(column.getKey()).setVisible(false);
-//                    }
-//                }))
-//        );
+        comboFilter.setItems(columns.stream().map(Grid.Column::getKey).toList());
+        comboFilter.addValueChangeListener(e -> columns.forEach(
+                column -> {
+                    this.sessionGrid.getColumnByKey(column.getKey()).setVisible(e.getValue().contains(column.getKey()));
+                }
+        ));
 
         return comboFilter;
     }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.jspecify.annotations.Nullable;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -20,6 +21,7 @@ public class Application {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rawg_game_id", referencedColumnName = "id")
+    @Nullable
     private RawgGame rawgGame;
 
     @Column(name = "path", nullable = false, length = 512, unique = true)
@@ -29,6 +31,7 @@ public class Application {
     private String title;
 
     @Column(name = "alias", length = 64)
+    @Nullable
     private String alias;
 
     @ColumnDefault("1")

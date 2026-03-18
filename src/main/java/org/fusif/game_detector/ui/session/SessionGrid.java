@@ -23,16 +23,7 @@ public class SessionGrid extends Grid<Session> {
                 .setAutoWidth(true).setSortable(true).setResizable(true).setKey("stop");
         addColumn(s -> Utils.prettyPrintTimeBetweenInstants(s.getSessionStart(), s.getSessionStop())).setHeader("Duration")
                 .setAutoWidth(true).setSortable(true).setResizable(true).setKey("duration")
-                .setComparator(
-                        new Comparator<>() {
-                            @Override
-                            public int compare(Session o1, Session o2) {
-                                return Utils.getDurationBetweenInstants(o1.getSessionStart(), o1.getSessionStop())
-                                        .compareTo(Utils.getDurationBetweenInstants(o2.getSessionStart(), o2.getSessionStop()));
-                            }
-                        }
-                );
-//        addColumn(s -> )
+                .setComparator(Comparator.comparing(o -> Utils.getDurationBetweenInstants(o.getSessionStart(), o.getSessionStop())));
     }
 
     public Session getSelectedSession() {

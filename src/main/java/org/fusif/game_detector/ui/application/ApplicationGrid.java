@@ -8,10 +8,10 @@ public class ApplicationGrid extends Grid<Application> {
         setSizeFull();
         setColumnReorderingAllowed(true);
 
-        addColumn(Application::getId).setHeader("ID").setAutoWidth(true).setResizable(true).setSortable(true).setKey("id");
-        addColumn(Application::getAlias).setHeader("Alias").setAutoWidth(true).setResizable(true).setSortable(true).setKey("alias");
-        addColumn(Application::getPath).setHeader("Path").setAutoWidth(true).setResizable(true).setSortable(true).setKey("path");
-        addColumn(Application::getTitle).setHeader("Title").setAutoWidth(true).setResizable(true).setSortable(true).setKey("title");
+        addColumn(Application::getId).setHeader("ID").setWidth("1rem").setResizable(true).setSortable(true).setKey("id");
+        addColumn(Application::getAlias).setHeader("Alias").setWidth("10rem").setResizable(true).setSortable(true).setKey("alias");
+        addColumn(Application::getPath).setHeader("Path").setWidth("15rem").setResizable(true).setSortable(true).setKey("path");
+        addColumn(Application::getTitle).setHeader("Title").setWidth("30rem").setResizable(true).setSortable(true).setKey("title");
         addColumn(Application::getSaveSession).setHeader("Save Session").setAutoWidth(true).setResizable(true).setSortable(true).setKey("saveSession");
     }
 
