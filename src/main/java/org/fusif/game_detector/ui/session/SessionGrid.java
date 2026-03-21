@@ -6,22 +6,24 @@ import org.fusif.game_detector.utils.Utils;
 
 import java.util.Comparator;
 
+import static org.fusif.game_detector.ui.session.SessionGridHeaders.*;
+
 public class SessionGrid extends Grid<Session> {
     public SessionGrid() {
         setSizeFull();
         setColumnReorderingAllowed(true);
 
-        addColumn(Session::getId).setHeader("ID")
+        addColumn(Session::getId).setHeader(ID.getValue())
                 .setAutoWidth(true).setResizable(true).setSortable(true).setKey("id");
-        addColumn(s -> s.getApplication().getAlias()).setHeader("Application Name")
+        addColumn(s -> s.getApplication().getAlias()).setHeader(APPLICATION_NAME.getValue())
                 .setAutoWidth(true).setSortable(true).setResizable(true).setKey("application");
-        addColumn(s -> s.getApplication().getPath()).setHeader("Application Path")
-                .setAutoWidth(true).setSortable(true).setResizable(true).setKey("path");
-        addColumn(Session::getSessionStart).setHeader("Start")
+        addColumn(s -> s.getApplication().getPath()).setHeader(APPLICATION_PATH.getValue())
+                .setWidth("20rem").setSortable(true).setResizable(true).setKey("path");
+        addColumn(Session::getSessionStart).setHeader(START_TIME.getValue())
                 .setAutoWidth(true).setSortable(true).setResizable(true).setKey("start");
-        addColumn(Session::getSessionStop).setHeader("Stop")
+        addColumn(Session::getSessionStop).setHeader(END_TIME.getValue())
                 .setAutoWidth(true).setSortable(true).setResizable(true).setKey("stop");
-        addColumn(s -> Utils.prettyPrintTimeBetweenInstants(s.getSessionStart(), s.getSessionStop())).setHeader("Duration")
+        addColumn(s -> Utils.prettyPrintTimeBetweenInstants(s.getSessionStart(), s.getSessionStop())).setHeader(DURATION.getValue())
                 .setAutoWidth(true).setSortable(true).setResizable(true).setKey("duration")
                 .setComparator(Comparator.comparing(o -> Utils.getDurationBetweenInstants(o.getSessionStart(), o.getSessionStop())));
     }

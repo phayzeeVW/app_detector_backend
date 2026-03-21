@@ -1,5 +1,6 @@
-package org.fusif.game_detector.ui.views;
+package org.fusif.game_detector.ui.session;
 
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
@@ -13,7 +14,6 @@ import com.vaadin.flow.router.RouteAlias;
 import org.fusif.game_detector.entity.Session;
 import org.fusif.game_detector.service.SessionService;
 import org.fusif.game_detector.ui.MainLayout;
-import org.fusif.game_detector.ui.session.SessionGrid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -33,9 +33,12 @@ public class SessionView extends VerticalLayout {
 
         MultiSelectComboBox<String> columnFilter = createColumnFilter();
         TextField searchField = createSearchField();
+        Checkbox toggleForSaveSession = createToggleForSaveSession();
+        toggleForSaveSession.setValue(true);
 
         add(searchField);
         add(columnFilter);
+        add(toggleForSaveSession);
         add(sessionGrid);
 
         sessionGrid.setItems(sessionService.getAllSaveSessionTrue());
@@ -51,6 +54,15 @@ public class SessionView extends VerticalLayout {
 
             return matchesApplicationName || matchesPathName;
         });
+        sessionGrid.getListDataView().addFilter(
+                s -> {
+                    if (toggleForSaveSession.getValue().equals(true)) {
+                        return s.getApplication().getSaveSession().equals(true);
+                    } else {
+                        return true;
+                    }
+                }
+        );
     }
 
     private boolean matchesTerm(String value, String term) {
@@ -67,15 +79,30 @@ public class SessionView extends VerticalLayout {
         textField.setPlaceholder("Search");
         textField.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
         textField.setValueChangeMode(ValueChangeMode.EAGER);
-        textField.addValueChangeListener(e -> this.sessionGrid.getListDataView().refreshAll());
+        textField.addValueChangeListener(
+                e -> {
+                    this.sessionGrid.getListDataView().refreshAll();
+                }
+        );
 
         return textField;
+    }
+
+    public Checkbox createToggleForSaveSession() {
+        Checkbox checkbox = new Checkbox("Show only tracked sessions");
+
+        checkbox.addValueChangeListener(e -> {
+            this.sessionGrid.getListDataView().refreshAll();
+        });
+
+        return checkbox;
     }
 
     public MultiSelectComboBox<String> createColumnFilter() {
         MultiSelectComboBox<String> comboFilter = new MultiSelectComboBox<>();
         List<Grid.Column<Session>> columns = new ArrayList<>(this.sessionGrid.getColumns());
 
+        comboFilter.setAutoExpand(MultiSelectComboBox.AutoExpandMode.HORIZONTAL);
         comboFilter.setItems(columns.stream().map(Grid.Column::getKey).toList());
         comboFilter.addValueChangeListener(e -> columns.forEach(
                 column -> {

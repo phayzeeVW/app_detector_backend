@@ -20,6 +20,10 @@ public class SessionService {
         return sessionRepository.findAllBySaveSessionTrue();
     }
 
+    public List<Session> findAll() {
+        return sessionRepository.findAll();
+    }
+
     public void saveSessions(List<Session> sessions) {
         sessionRepository.saveAll(sessions);
     }

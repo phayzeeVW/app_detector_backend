@@ -1,5 +1,6 @@
-package org.fusif.game_detector.ui.views;
+package org.fusif.game_detector.ui.application;
 
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
@@ -13,7 +14,6 @@ import com.vaadin.flow.router.RouteAlias;
 import org.fusif.game_detector.entity.Application;
 import org.fusif.game_detector.service.ApplicationService;
 import org.fusif.game_detector.ui.MainLayout;
-import org.fusif.game_detector.ui.application.ApplicationGrid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -33,9 +33,11 @@ public class ApplicationView extends VerticalLayout {
 
         MultiSelectComboBox<String> columnFilter = createColumnFilter();
         TextField searchField = createSearchField();
+        Checkbox toggleForSaveSession = createToggleForSaveSession();
 
         add(searchField);
         add(columnFilter);
+        add(toggleForSaveSession);
         add(applicationsGrid);
 
         applicationsGrid.setItems(applicationService.findAll());
@@ -52,6 +54,15 @@ public class ApplicationView extends VerticalLayout {
 
             return matchesAlias || matchesName || matchesPath;
         });
+        applicationsGrid.getListDataView().addFilter(
+                a -> {
+                    if (toggleForSaveSession.getValue().equals(true)) {
+                        return a.getSaveSession().equals(true);
+                    } else {
+                        return true;
+                    }
+                }
+        );
     }
 
     public boolean matchesTerm(String value, String term) {
@@ -77,6 +88,7 @@ public class ApplicationView extends VerticalLayout {
         MultiSelectComboBox<String> comboFilter = new MultiSelectComboBox<>();
         List<Grid.Column<Application>> columns = new ArrayList<>(this.applicationsGrid.getColumns());
 
+        comboFilter.setAutoExpand(MultiSelectComboBox.AutoExpandMode.HORIZONTAL);
         comboFilter.setItems(columns.stream().map(Grid.Column::getKey).toList());
         comboFilter.addValueChangeListener(e -> columns.forEach(
                 column -> {
@@ -85,5 +97,15 @@ public class ApplicationView extends VerticalLayout {
         ));
 
         return comboFilter;
+    }
+
+    public Checkbox createToggleForSaveSession() {
+        Checkbox checkbox = new Checkbox("Show only tracked sessions");
+
+        checkbox.addValueChangeListener(e -> {
+            this.applicationsGrid.getListDataView().refreshAll();
+        });
+
+        return checkbox;
     }
 }

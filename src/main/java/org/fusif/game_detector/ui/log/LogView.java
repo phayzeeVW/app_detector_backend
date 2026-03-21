@@ -1,4 +1,4 @@
-package org.fusif.game_detector.ui.views;
+package org.fusif.game_detector.ui.log;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
