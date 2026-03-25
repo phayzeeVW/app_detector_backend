@@ -8,14 +8,18 @@ spring:
     jdbc:
       dialect: mysql
   datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/game_detector
-    name: game_detector
+    url: jdbc:sqlite:${app.home}/game_detector.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create-only
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
   quartz:
     auto-startup: false
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
 logging:
   file:
     name: ${app.logs}/application.log

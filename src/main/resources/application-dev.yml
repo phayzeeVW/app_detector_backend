@@ -4,14 +4,17 @@ app:
 spring:
   application:
     name: game_detector
-  data:
-    jdbc:
-      dialect: mysql
   datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/game_detector_dev
-    name: game_detector_dev
+    url: jdbc:sqlite:${app.home}/game_detector-dev.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create-only
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
   quartz:
     auto-startup: false
 logging:
