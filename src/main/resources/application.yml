@@ -4,9 +4,6 @@ app:
 spring:
   application:
     name: game_detector
-  data:
-    jdbc:
-      dialect: mysql
   datasource:
     url: jdbc:sqlite:${app.home}/game_detector.db
     driver-class-name: org.sqlite.JDBC
