@@ -4,22 +4,25 @@ app:
 spring:
   application:
     name: game_detector
-  data:
-    jdbc:
-      dialect: mysql
   datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/game_detector_dev
-    name: game_detector_dev
+    url: jdbc:sqlite:${app.home}/game_detector-dev.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create-only
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
   quartz:
     auto-startup: false
 logging:
   file:
-    name: "application"
+    name: ${app.logs}/application-dev.log
   logback:
     rollingpolicy:
-      file-name-pattern: ${app.logs}/application-%d{yyyy-MM-dd}.%i.log
+      file-name-pattern: ${app.logs}/application-dev-%d{yyyy-MM-dd}.%i.log
       max-file-size: 10MB
       max-history: 90
   level:
