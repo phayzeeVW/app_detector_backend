@@ -1,5 +1,5 @@
 app:
-  home: ${user.home}/application_detector
+  home: ${user.home}/application_detector/dev
   logs: ${app.home}/logs
 spring:
   application:
@@ -10,15 +10,13 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/game_detector
-    name: game_detector
+    url: jdbc:mysql://localhost:3306/game_detector_dev
+    name: game_detector_dev
   quartz:
     auto-startup: false
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
 logging:
   file:
-    name: ${app.logs}/application.log
+    name: "application"
   logback:
     rollingpolicy:
       file-name-pattern: ${app.logs}/application-%d{yyyy-MM-dd}.%i.log
