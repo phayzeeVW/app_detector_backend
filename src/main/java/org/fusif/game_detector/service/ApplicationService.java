@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.fusif.game_detector.entity.Application;
+import org.fusif.game_detector.model.DtoHelper;
 import org.fusif.game_detector.repository.IApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,18 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ApplicationService {
     IApplicationRepository iApplicationRepository;
+
+    public Optional<Application> getApplicationById(Integer id) {
+        return this.iApplicationRepository.findById(id);
+    }
+
+    public Optional<Application> getApplicationByTitle(String title) {
+        return this.iApplicationRepository.findApplicationByTitle(title);
+    }
+
+    public Optional<Application> getApplicationByAlias(String alias) {
+        return this.iApplicationRepository.findApplicationByAlias(alias);
+    }
 
     public Optional<Application> getApplicationByPath(String path) {
         return this.iApplicationRepository.findApplicationByPath(path);
