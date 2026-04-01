@@ -3,6 +3,7 @@ package org.fusif.game_detector.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.fusif.game_detector.entity.converter.SessionDateConverter;
 
 import java.time.Instant;
 
@@ -17,9 +18,11 @@ public class Session {
     private Integer id;
 
     @Column(name = "session_start", nullable = false)
+    @Convert(converter = SessionDateConverter.class)
     private Instant sessionStart;
 
     @Column(name = "session_stop")
+    @Convert(converter = SessionDateConverter.class)
     private Instant sessionStop;
 
     @ManyToOne(fetch = FetchType.LAZY)

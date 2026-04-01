@@ -17,6 +17,18 @@ import java.util.Optional;
 public class ApplicationService {
     IApplicationRepository iApplicationRepository;
 
+    public Optional<Application> getApplicationById(Integer id) {
+        return this.iApplicationRepository.findById(id);
+    }
+
+    public Optional<Application> getApplicationByTitle(String title) {
+        return this.iApplicationRepository.findApplicationByTitle(title);
+    }
+
+    public Optional<Application> getApplicationByAlias(String alias) {
+        return this.iApplicationRepository.findApplicationByAlias(alias);
+    }
+
     public Optional<Application> getApplicationByPath(String path) {
         return this.iApplicationRepository.findApplicationByPath(path);
     }

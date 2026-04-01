@@ -12,4 +12,6 @@ public interface IApplicationRepository extends JpaRepository<Application, Integ
     Optional<Application> findApplicationByPath(String path);
     List<Application> findApplicationsBySaveSessionFalse();
     List<Application> findApplicationsBySaveSessionTrue();
+    Optional<Application> findApplicationByAlias(String alias);
+    Optional<Application> findApplicationByTitle(String title);
 }
