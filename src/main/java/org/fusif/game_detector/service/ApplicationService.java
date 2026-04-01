@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.fusif.game_detector.entity.Application;
-import org.fusif.game_detector.model.DtoHelper;
 import org.fusif.game_detector.repository.IApplicationRepository;
 import org.springframework.stereotype.Service;
 

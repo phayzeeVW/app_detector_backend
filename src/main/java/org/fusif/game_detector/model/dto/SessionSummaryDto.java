@@ -1,4 +1,4 @@
-package org.fusif.game_detector.model;
+package org.fusif.game_detector.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +10,11 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SessionDto implements Serializable {
+public class SessionSummaryDto implements Serializable {
     private Integer id;
     private Instant sessionStart;
     private Instant sessionStop;
-    private Integer applicationId;
+    private String applicationTitle;
+    private String applicationAlias;
+    private String applicationPath;
 }

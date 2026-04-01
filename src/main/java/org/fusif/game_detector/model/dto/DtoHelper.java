@@ -1,4 +1,4 @@
-package org.fusif.game_detector.model;
+package org.fusif.game_detector.model.dto;
 
 import org.fusif.game_detector.entity.Application;
 import org.fusif.game_detector.entity.Session;
@@ -10,7 +10,7 @@ public final class DtoHelper {
         throw new IllegalStateException("Utility class");
     }
 
-    public static ApplicationDto toDto(Application application) {
+    public static ApplicationDto mapApplicationToApplicationDto(Application application) {
         if (application == null) {
             return null;
         }
@@ -23,12 +23,12 @@ public final class DtoHelper {
                 application.getAlias(),
                 application.getSaveSession(),
                 application.getSessions() != null
-                        ? application.getSessions().stream().map(DtoHelper::toDto).toList()
+                        ? application.getSessions().stream().map(DtoHelper::mapSessionToSessionDto).toList()
                         : null
         );
     }
 
-    public static Application toEntity(ApplicationDto dto) {
+    public static Application mapApplicationDtoToEntity(ApplicationDto dto) {
         if (dto == null) {
             return null;
         }
@@ -43,7 +43,22 @@ public final class DtoHelper {
         return application;
     }
 
-    public static SessionDto toDto(Session session) {
+    public static SessionSummaryDto mapSessionToSummaryDto(Session session) {
+        if (session == null) {
+            return null;
+        }
+
+        return new SessionSummaryDto(
+                session.getId(),
+                session.getSessionStart(),
+                session.getSessionStop(),
+                session.getApplication().getTitle(),
+                session.getApplication().getAlias(),
+                session.getApplication().getPath()
+        );
+    }
+
+    public static SessionDto mapSessionToSessionDto(Session session) {
         if (session == null) {
             return null;
         }
@@ -56,7 +71,7 @@ public final class DtoHelper {
         );
     }
 
-    public static Session toEntity(SessionDto dto) {
+    public static Session mapSessionDtoToEntity(SessionDto dto) {
         if (dto == null) {
             return null;
         }
@@ -69,11 +84,15 @@ public final class DtoHelper {
         return session;
     }
 
+    public static List<SessionSummaryDto> toSessionSummaryDtoList(List<Session> sessions) {
+        return sessions == null ? null : sessions.stream().map(DtoHelper::mapSessionToSummaryDto).toList();
+    }
+
     public static List<SessionDto> toSessionDtoList(List<Session> sessions) {
-        return sessions == null ? null : sessions.stream().map(DtoHelper::toDto).toList();
+        return sessions == null ? null : sessions.stream().map(DtoHelper::mapSessionToSessionDto).toList();
     }
 
     public static List<ApplicationDto> toApplicationDtoList(List<Application> applications) {
-        return applications == null ? null : applications.stream().map(DtoHelper::toDto).toList();
+        return applications == null ? null : applications.stream().map(DtoHelper::mapApplicationToApplicationDto).toList();
     }
 }

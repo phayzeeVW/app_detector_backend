@@ -1,4 +1,4 @@
-package org.fusif.game_detector.model;
+package org.fusif.game_detector.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

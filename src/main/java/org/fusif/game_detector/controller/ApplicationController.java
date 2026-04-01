@@ -1,9 +1,8 @@
 package org.fusif.game_detector.controller;
 
-import io.swagger.v3.oas.models.annotations.OpenAPI31;
 import org.fusif.game_detector.entity.Application;
-import org.fusif.game_detector.model.ApplicationDto;
-import org.fusif.game_detector.model.DtoHelper;
+import org.fusif.game_detector.model.dto.ApplicationDto;
+import org.fusif.game_detector.model.dto.DtoHelper;
 import org.fusif.game_detector.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +37,7 @@ public class ApplicationController {
         Optional<Application> application = applicationService.getApplicationById(id);
 
         if (application.isPresent()) {
-            ApplicationDto applicationDto = DtoHelper.toDto(application.get());
+            ApplicationDto applicationDto = DtoHelper.mapApplicationToApplicationDto(application.get());
 
             return ResponseEntity.ok(applicationDto);
         } else {
@@ -51,7 +50,7 @@ public class ApplicationController {
         Optional<Application> application = applicationService.getApplicationByPath(path);
 
         if (application.isPresent()) {
-            ApplicationDto applicationDto = DtoHelper.toDto(application.get());
+            ApplicationDto applicationDto = DtoHelper.mapApplicationToApplicationDto(application.get());
 
             return ResponseEntity.ok(applicationDto);
         } else {
@@ -64,7 +63,7 @@ public class ApplicationController {
         Optional<Application> application = applicationService.getApplicationByAlias(alias);
 
         if (application.isPresent()) {
-            ApplicationDto applicationDto = DtoHelper.toDto(application.get());
+            ApplicationDto applicationDto = DtoHelper.mapApplicationToApplicationDto(application.get());
 
             return ResponseEntity.ok(applicationDto);
         } else {
@@ -77,7 +76,7 @@ public class ApplicationController {
         Optional<Application> application = applicationService.getApplicationByTitle(title);
 
         if (application.isPresent()) {
-            ApplicationDto applicationDto = DtoHelper.toDto(application.get());
+            ApplicationDto applicationDto = DtoHelper.mapApplicationToApplicationDto(application.get());
 
             return ResponseEntity.ok(applicationDto);
         } else {
