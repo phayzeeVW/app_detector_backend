@@ -1,19 +1,25 @@
 package org.fusif.game_detector.utils;
 
-import org.springframework.format.annotation.DurationFormat;
-import org.springframework.format.datetime.standard.DurationFormatterUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.fusif.game_detector.exception.ApplicationDetectorTechnicalException;
 
-import java.time.Duration;
-import java.time.Instant;
-
+@Slf4j
 public class Utils {
-    public static Duration getDurationBetweenInstants(Instant start, Instant end)  {
-        return Duration.between(start, end);
-    }
+    public static boolean jsonIsValid(String json) throws ApplicationDetectorTechnicalException {
+        ObjectMapper objectMapper = new ObjectMapper()
+                .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
 
-    public static String prettyPrintTimeBetweenInstants(Instant start, Instant end) {
-        Duration duration = getDurationBetweenInstants(start, end);
+        try {
+            objectMapper.readTree(json);
+        } catch (JsonProcessingException e) {
+            log.error("Error parsing JSON: ", e);
 
-        return DurationFormatterUtils.print(duration, DurationFormat.Style.COMPOSITE);
+            return false;
+        }
+
+        return true;
     }
 }
