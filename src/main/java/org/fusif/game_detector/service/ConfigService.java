@@ -1,5 +1,6 @@
 package org.fusif.game_detector.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.fusif.game_detector.exception.ApplicationDetectorTechnicalException;
 import org.fusif.game_detector.model.dto.TableConfigDto;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
 @Service
@@ -16,6 +18,17 @@ public class ConfigService {
     @Value("${app.config}")
     @Getter
     private Path configPath;
+
+    @PostConstruct
+    public void validateConfigPath() {
+        if (!Files.exists(configPath)) {
+            try {
+                Files.createDirectories(configPath);
+            } catch (IOException e) {
+                throw new ApplicationDetectorTechnicalException("Failed to create config directory: " + configPath, e);
+            }
+        }
+    }
 
     public Path writeConfigToFile(TableConfigDto tableConfigDto) {
         Path configFilePath = configPath.resolve(tableConfigDto.getTableName() + ".json");
@@ -40,6 +53,14 @@ public class ConfigService {
             }
 
             return tableConfigJson;
+        } catch (NoSuchFileException e) {
+            try {
+                Files.createFile(configFilePath);
+
+                return "{}";
+            } catch (IOException ex) {
+                throw new ApplicationDetectorTechnicalException("Failed to create config file: " + configFilePath, ex);
+            }
         } catch (IOException e) {
             throw new ApplicationDetectorTechnicalException("Failed to read config file: " + configFilePath, e);
         }

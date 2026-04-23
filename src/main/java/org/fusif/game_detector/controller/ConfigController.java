@@ -25,8 +25,10 @@ public class ConfigController {
     }
 
     @PostMapping(value = "/write")
-    public void writeTableConfig(@RequestBody TableConfigDto tableConfigDto) {
+    public ResponseEntity<TableConfigDto> writeTableConfig(@RequestBody TableConfigDto tableConfigDto) {
         configService.writeConfigToFile(tableConfigDto);
+
+        return ResponseEntity.ok(tableConfigDto);
     }
 }
 
