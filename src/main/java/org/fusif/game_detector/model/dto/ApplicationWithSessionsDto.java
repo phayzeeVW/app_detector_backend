@@ -2,21 +2,18 @@ package org.fusif.game_detector.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ApplicationDto implements Serializable {
-    Integer id;
-    Integer rawgGameId;
-    String path;
-    String title;
-    String alias;
-    Boolean saveSession;
-    Integer numberOfSessions;
+public class ApplicationWithSessionsDto extends ApplicationDto implements Serializable {
+    List<SessionDto> sessions;
 }

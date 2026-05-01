@@ -2,6 +2,7 @@ package org.fusif.game_detector.controller;
 
 import org.fusif.game_detector.entity.Application;
 import org.fusif.game_detector.model.dto.ApplicationDto;
+import org.fusif.game_detector.model.dto.ApplicationWithSessionsDto;
 import org.fusif.game_detector.model.dto.DtoHelper;
 import org.fusif.game_detector.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,11 @@ public class ApplicationController {
     }
 
     @GetMapping(value = "/id/{id}")
-    public ResponseEntity<ApplicationDto> getApplicationById(@PathVariable Integer id) {
+    public ResponseEntity<ApplicationWithSessionsDto> getApplicationById(@PathVariable Integer id) {
         Optional<Application> application = applicationService.getApplicationById(id);
 
         if (application.isPresent()) {
-            ApplicationDto applicationDto = DtoHelper.mapApplicationToApplicationDto(application.get());
+            ApplicationWithSessionsDto applicationDto = DtoHelper.mapApplicationToApplicationWithSessions(application.get());
 
             return ResponseEntity.ok(applicationDto);
         } else {

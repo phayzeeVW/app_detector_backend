@@ -10,6 +10,24 @@ public final class DtoHelper {
         throw new IllegalStateException("Utility class");
     }
 
+    public static ApplicationWithSessionsDto mapApplicationToApplicationWithSessions(Application application) {
+        if (application == null) {
+            return null;
+        }
+
+        return ApplicationWithSessionsDto.builder()
+                .id(application.getId())
+                .rawgGameId(application.getRawgGame() != null ? application.getRawgGame().getId() : null)
+                .path(application.getPath())
+                .title(application.getTitle())
+                .alias(application.getAlias())
+                .saveSession(application.getSaveSession())
+                .sessions(application.getSessions() != null
+                        ? application.getSessions().stream().map(DtoHelper::mapSessionToSessionDto).toList()
+                        : null)
+                .build();
+    }
+
     public static ApplicationDto mapApplicationToApplicationDto(Application application) {
         if (application == null) {
             return null;
@@ -22,9 +40,7 @@ public final class DtoHelper {
                 application.getTitle(),
                 application.getAlias(),
                 application.getSaveSession(),
-                application.getSessions() != null
-                        ? application.getSessions().stream().map(DtoHelper::mapSessionToSessionDto).toList()
-                        : null
+                application.getSessions().size()
         );
     }
 
