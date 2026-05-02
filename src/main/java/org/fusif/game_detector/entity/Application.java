@@ -38,7 +38,7 @@ public class Application {
     @Column(name = "save_session")
     private Boolean saveSession;
 
-    @OneToMany(mappedBy = "application")
+    @OneToMany(mappedBy = "application", fetch = FetchType.LAZY)
     private Set<Session> sessions = new LinkedHashSet<>();
 
 }
