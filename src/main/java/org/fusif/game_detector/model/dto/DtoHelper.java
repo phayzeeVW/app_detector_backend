@@ -28,12 +28,12 @@ public final class DtoHelper {
                 .build();
     }
 
-    public static ApplicationDto mapApplicationToApplicationDto(Application application) {
+    public static ApplicationSummary mapApplicationToApplicationSummary(Application application) {
         if (application == null) {
             return null;
         }
 
-        return new ApplicationDto(
+        return new ApplicationSummary(
                 application.getId(),
                 application.getRawgGame() != null ? application.getRawgGame().getId() : null,
                 application.getPath(),
@@ -44,7 +44,7 @@ public final class DtoHelper {
         );
     }
 
-    public static Application mapApplicationDtoToEntity(ApplicationDto dto) {
+    public static Application mapApplicationSummaryToEntity(ApplicationSummary dto) {
         if (dto == null) {
             return null;
         }
@@ -108,7 +108,7 @@ public final class DtoHelper {
         return sessions == null ? null : sessions.stream().map(DtoHelper::mapSessionToSessionDto).toList();
     }
 
-    public static List<ApplicationDto> toApplicationDtoList(List<Application> applications) {
-        return applications == null ? null : applications.stream().map(DtoHelper::mapApplicationToApplicationDto).toList();
+    public static List<ApplicationSummary> toApplicationSummaryList(List<Application> applications) {
+        return applications == null ? null : applications.stream().map(DtoHelper::mapApplicationToApplicationSummary).toList();
     }
 }
