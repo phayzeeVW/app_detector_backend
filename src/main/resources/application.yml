@@ -1,5 +1,5 @@
 app:
-  home: ${user.home}/application_detector
+  home: ${user.home}/application_detector/release
   logs: ${app.home}/logs
   config: ${app.home}/config
 spring:
