@@ -1,8 +1,8 @@
 package org.fusif.game_detector.controller;
 
 import org.fusif.game_detector.entity.Application;
-import org.fusif.game_detector.model.dto.ApplicationSummary;
 import org.fusif.game_detector.model.dto.ApplicationWithSessionsDto;
+import org.fusif.game_detector.model.dto.ApplicationWithoutSessionsDto;
 import org.fusif.game_detector.model.dto.DtoHelper;
 import org.fusif.game_detector.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +28,15 @@ public class ApplicationController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ApplicationSummary>> getAllApplications() {
+    public ResponseEntity<List<ApplicationWithoutSessionsDto>> getAllApplications() {
         List<Application> applications = applicationService.findAll();
-        List<ApplicationSummary> applicationSummaryDtos = DtoHelper.toApplicationSummaryList(applications);
+        List<ApplicationWithoutSessionsDto> applicationWithoutSessionsDtoDtos = DtoHelper.toApplicationWithoutSessionsList(applications);
 
-        return ResponseEntity.ok(applicationSummaryDtos);
+        return ResponseEntity.ok(applicationWithoutSessionsDtoDtos);
     }
 
     @GetMapping(value = "/id/{id}")
-    public ResponseEntity<ApplicationWithSessionsDto> getApplicationById(@PathVariable Integer id) {
+    public ResponseEntity<ApplicationWithoutSessionsDto> getApplicationById(@PathVariable Integer id) {
         Optional<Application> application = applicationService.getApplicationById(id);
 
         if (application.isPresent()) {
@@ -49,60 +49,60 @@ public class ApplicationController {
     }
 
     @GetMapping(value = "/path/{path}")
-    public ResponseEntity<ApplicationSummary> getApplicationByPath(@PathVariable String path) {
+    public ResponseEntity<ApplicationWithoutSessionsDto> getApplicationByPath(@PathVariable String path) {
         Optional<Application> application = applicationService.getApplicationByPath(path);
 
         if (application.isPresent()) {
-            ApplicationSummary applicationSummaryDto = DtoHelper.mapApplicationToApplicationSummary(application.get());
+            ApplicationWithoutSessionsDto applicationWithoutSessionsDto = DtoHelper.mapApplicationToApplicationWithoutSessions(application.get());
 
-            return ResponseEntity.ok(applicationSummaryDto);
+            return ResponseEntity.ok(applicationWithoutSessionsDto);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping(value = "/alias/{alias}")
-    public ResponseEntity<ApplicationSummary> getApplicationByAlias(@PathVariable String alias) {
+    public ResponseEntity<ApplicationWithoutSessionsDto> getApplicationByAlias(@PathVariable String alias) {
         Optional<Application> application = applicationService.getApplicationByAlias(alias);
 
         if (application.isPresent()) {
-            ApplicationSummary applicationSummaryDto = DtoHelper.mapApplicationToApplicationSummary(application.get());
+            ApplicationWithoutSessionsDto applicationWithoutSessionsDto = DtoHelper.mapApplicationToApplicationWithoutSessions(application.get());
 
-            return ResponseEntity.ok(applicationSummaryDto);
+            return ResponseEntity.ok(applicationWithoutSessionsDto);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping(value = "/title/{title}")
-    public ResponseEntity<ApplicationSummary> getApplicationByTitle(@PathVariable String title) {
+    public ResponseEntity<ApplicationWithoutSessionsDto> getApplicationByTitle(@PathVariable String title) {
         Optional<Application> application = applicationService.getApplicationByTitle(title);
 
         if (application.isPresent()) {
-            ApplicationSummary applicationSummaryDto = DtoHelper.mapApplicationToApplicationSummary(application.get());
+            ApplicationWithoutSessionsDto applicationWithoutSessionsDto = DtoHelper.mapApplicationToApplicationWithoutSessions(application.get());
 
-            return ResponseEntity.ok(applicationSummaryDto);
+            return ResponseEntity.ok(applicationWithoutSessionsDto);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping(value = "/{applicationId}")
-    public ResponseEntity<ApplicationSummary> updateApplication(@PathVariable Integer applicationId, @RequestBody ApplicationSummary applicationSummary) {
+    public ResponseEntity<ApplicationWithoutSessionsDto> updateApplication(@PathVariable Integer applicationId, @RequestBody ApplicationWithoutSessionsDto applicationWithoutSessionsDto) {
         Optional<Application> application = applicationService.getApplicationById(applicationId);
 
         if (application.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        applicationSummary.setId(applicationId);
+        applicationWithoutSessionsDto.setId(applicationId);
 
         Application updatedApplication = applicationService.saveApplication(
-                DtoHelper.mapApplicationSummaryToEntity(applicationSummary)
+                DtoHelper.mapApplicationWithoutSessionsToEntity(applicationWithoutSessionsDto)
         );
 
-        ApplicationSummary updatedApplicationSummary = DtoHelper.mapApplicationToApplicationSummary(updatedApplication);
+        ApplicationWithoutSessionsDto updatedApplicationWithoutSessionsDto = DtoHelper.mapApplicationToApplicationWithoutSessions(updatedApplication);
 
-        return ResponseEntity.ok(updatedApplicationSummary);
+        return ResponseEntity.ok(updatedApplicationWithoutSessionsDto);
     }
 }

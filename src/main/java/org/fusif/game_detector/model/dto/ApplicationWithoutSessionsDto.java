@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ApplicationSummary implements Serializable {
+public class ApplicationWithoutSessionsDto implements Serializable {
     Integer id;
     Integer rawgGameId;
     String path;

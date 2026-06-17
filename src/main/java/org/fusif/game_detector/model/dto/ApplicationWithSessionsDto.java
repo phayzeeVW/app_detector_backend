@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ApplicationWithSessionsDto extends ApplicationSummary implements Serializable {
+public class ApplicationWithSessionsDto extends ApplicationWithoutSessionsDto implements Serializable {
     List<SessionDto> sessions;
 }
