@@ -1,8 +1,8 @@
 package org.fusif.game_detector.scheduler;
 
 import com.sun.jna.platform.DesktopWindow;
-import com.sun.jna.platform.WindowUtils;
 import org.fusif.game_detector.entity.Application;
+import org.fusif.game_detector.external.WindowUtils;
 import org.fusif.game_detector.model.DesktopWindowWrapper;
 import org.fusif.game_detector.service.ApplicationService;
 import org.fusif.game_detector.service.SessionService;
@@ -17,7 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

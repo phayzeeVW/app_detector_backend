@@ -6,20 +6,18 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DesktopWindowWrapperTest {
 
     @Test
     void testEquals() {
         DesktopWindowWrapper desktopWindowWrapper1 = new DesktopWindowWrapper(
-                new DesktopWindow(any(WinDef.HWND.class), anyString(), "filePath", any(Rectangle.class))
+                new DesktopWindow(new WinDef.HWND(), "title1", "filePath", new Rectangle())
         );
 
         DesktopWindowWrapper desktopWindowWrapper2 = new DesktopWindowWrapper(
-                new DesktopWindow(any(WinDef.HWND.class), anyString(), "filePath", any(Rectangle.class))
+                new DesktopWindow(new WinDef.HWND(), "title2", "filePath", new Rectangle())
         );
 
         assertEquals(desktopWindowWrapper1, desktopWindowWrapper2);
