@@ -17,7 +17,7 @@ import java.nio.file.Path;
 @Slf4j
 public class ApplicationDetector {
 
-    @Value("${app.home")
+    @Value("${app.home}")
     private String home;
 
     public static void main(String[] args) {

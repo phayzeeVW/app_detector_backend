@@ -45,8 +45,8 @@ public class ApplicationService {
         return this.iApplicationRepository.findAll();
     }
 
-    public void saveApplication(Application application) {
-        this.iApplicationRepository.save(application);
+    public Application saveApplication(Application application) {
+        return this.iApplicationRepository.save(application);
     }
 
     public void saveApplications(List<Application> applications) {
